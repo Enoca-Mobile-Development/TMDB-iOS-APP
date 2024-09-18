@@ -1,16 +1,16 @@
 import SwiftUI
 
-struct TopRatedView: View {
+struct FullNowPlayingView: View {
     
-    @ObservedObject var viewModel3: TopRatedViewModel
+    @ObservedObject var viewModel: NowPlayingViewModel
     @State private var isLoadingMore = false
     
     var body: some View {
         VStack {
-            if viewModel3.isLoading && !isLoadingMore {
+            if viewModel.isLoading && !isLoadingMore {
                 Text("Veriler Yükleniyor...")
             } else {
-                List(viewModel3.movies, id: \.id) { movie in
+                List(viewModel.movies, id: \.id) { movie in
                     VStack(alignment: .leading) {
                         Text(movie.title)
                             .font(.headline)
@@ -19,7 +19,7 @@ struct TopRatedView: View {
                 }
                 .onAppear {
                     // İlk veri yükleme
-                    if !viewModel3.isLoading {
+                    if !viewModel.isLoading {
                         loadMoreMovies()
                     }
                 }
@@ -27,7 +27,7 @@ struct TopRatedView: View {
             }
         }
         .onAppear {
-            viewModel3.loadMovies()
+            viewModel.loadMovies()
         }
     }
     
@@ -38,7 +38,7 @@ struct TopRatedView: View {
         // Sayfa numarasını artırma ve yeni verileri yükleme işlemi
         Task {
             do {
-                try await viewModel3.loadMoreMovies()
+                try await viewModel.loadMoreMovies()
                 isLoadingMore = false
             } catch {
                 print("Error loading more movies: \(error)")
@@ -49,5 +49,6 @@ struct TopRatedView: View {
 }
 
 #Preview {
-    TopRatedView(viewModel3: TopRatedViewModel())
+    FullNowPlayingView(viewModel: NowPlayingViewModel())
 }
+

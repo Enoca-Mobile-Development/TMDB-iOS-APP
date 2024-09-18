@@ -7,15 +7,15 @@
 
 import Foundation
 
-struct Movie: Codable {
+struct Movie: Codable,Identifiable, Equatable {
     let id: Int
     let title: String
     let overview: String
     let posterPath: String
     let releaseDate: String
-    let popularity: Int
-    let voteAverage: Int
-    let voteCount: Int
+    let popularity: Double
+    let voteAverage: Double
+    let voteCount: Double
     let language: String
 
 
@@ -33,4 +33,21 @@ struct Movie: Codable {
 
 
     }
+    
+}
+
+struct NowPlayingResponse: Decodable {
+    let results: [Movie]
+}
+
+struct PopularResponse: Decodable {
+    let results: [Movie]
+}
+
+struct TopRatedResponse: Decodable {
+    let results: [Movie]
+}
+
+struct UpcomingResponse: Decodable {
+    let results: [Movie]
 }

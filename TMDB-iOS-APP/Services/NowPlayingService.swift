@@ -1,31 +1,41 @@
 import Foundation
+import Combine
 
 class NowPlayingService {
     
-    let url: URL
-    var components: URLComponents
+    private let apiKey = "fa4a1eec929f46b7d73d21792fbf2f44"
+    private let baseURL = "https://api.themoviedb.org/3/movie/now_playing"
     
-    init() {
-        self.url = URL(string: "https://api.themoviedb.org/3/movie/now_playing")!
-        self.components = URLComponents(url: url, resolvingAgainstBaseURL: true)!
-        
+    func fetchNowPlaying(search: String) -> AnyPublisher<[Movie], Error> {
+        var components = URLComponents(string: baseURL)!
         let queryItems: [URLQueryItem] = [
+            URLQueryItem(name: "api_key", value: apiKey),
             URLQueryItem(name: "language", value: "en-US"),
-            URLQueryItem(name: "page", value: "1")
+            URLQueryItem(name: "page", value: "1"),
+            URLQueryItem(name: "query", value: search) // Arama terimi ekleyebilirsiniz
         ]
-        components.queryItems = (components.queryItems ?? []) + queryItems
-    }
-    
-    func fetchMovies() async throws {
-        var request = URLRequest(url: components.url!)
+        components.queryItems = queryItems
+        
+        guard let url = components.url else {
+            return Fail(error: URLError(.badURL)).eraseToAnyPublisher()
+        }
+        
+        var request = URLRequest(url: url)
         request.httpMethod = "GET"
         request.timeoutInterval = 10
         request.allHTTPHeaderFields = [
             "accept": "application/json",
-            "Authorization": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJmYTRhMWVlYzkyOWY0NmI3ZDczZDIxNzkyZmJmMmY0NCIsIm5iZiI6MTcyNjAwNjExNi43NDM3MDMsInN1YiI6IjY2Y2YwYzUwYzY4NjgxZGI0ZGEwYTU5MSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.ZIg62E8wJ6Cw6XLwZWEmNXSToufpEhr2QqDViafPK2Y"
+            "Authorization": "Bearer \(apiKey)"
         ]
         
-        let (data, _) = try await URLSession.shared.data(for: request)
-        print(String(decoding: data, as: UTF8.self))
+        return URLSession.shared.dataTaskPublisher(for: request)
+            .map(\.data)
+            .decode(type: NowPlayingResponse.self, decoder: JSONDecoder())
+            .map(\.results)
+            .receive(on: DispatchQueue.main) // Ana iş parçacığına geçiş yapar
+            .eraseToAnyPublisher()
     }
+    
+
 }
+
