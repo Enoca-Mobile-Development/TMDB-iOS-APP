@@ -11,9 +11,7 @@ import SwiftUI
 struct TMDB_iOS_APPApp: App {
     var body: some Scene {
         WindowGroup {
-            NowPlayingView()
-       
-            
+            CategoryView()
     
         }
     }

@@ -6,12 +6,12 @@ class NowPlayingService {
     private let apiKey = "fa4a1eec929f46b7d73d21792fbf2f44"
     private let baseURL = "https://api.themoviedb.org/3/movie/now_playing"
     
-    func fetchNowPlaying(search: String) -> AnyPublisher<[Movie], Error> {
+    func fetchNowPlaying(search: String, value: String) -> AnyPublisher<[Movie], Error> {
         var components = URLComponents(string: baseURL)!
         let queryItems: [URLQueryItem] = [
             URLQueryItem(name: "api_key", value: apiKey),
             URLQueryItem(name: "language", value: "en-US"),
-            URLQueryItem(name: "page", value: "1"),
+            URLQueryItem(name: "page", value: value),
             URLQueryItem(name: "query", value: search) // Arama terimi ekleyebilirsiniz
         ]
         components.queryItems = queryItems

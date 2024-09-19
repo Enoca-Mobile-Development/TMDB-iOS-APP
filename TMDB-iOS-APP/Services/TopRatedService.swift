@@ -6,12 +6,12 @@ class TopRatedService {
     private let apiKey = "fa4a1eec929f46b7d73d21792fbf2f44"
     private let baseURL = "https://api.themoviedb.org/3/movie/top_rated"
     
-    func fetchTopRated(search: String) -> AnyPublisher<[Movie], Error> {
+    func fetchTopRated(search: String, value: String) -> AnyPublisher<[Movie], Error> {
         var components = URLComponents(string: baseURL)!
         let queryItems: [URLQueryItem] = [
             URLQueryItem(name: "api_key", value: apiKey),
             URLQueryItem(name: "language", value: "en-US"),
-            URLQueryItem(name: "page", value: "1"),
+            URLQueryItem(name: "page", value: value),
             URLQueryItem(name: "query", value: search) // Arama terimi ekleyebilirsiniz
         ]
         components.queryItems = queryItems
@@ -35,6 +35,7 @@ class TopRatedService {
             .receive(on: DispatchQueue.main) // Ana iş parçacığına geçiş yapar
             .eraseToAnyPublisher()
     }
-}
+    
 
+}
 

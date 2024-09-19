@@ -14,7 +14,7 @@ class FilmDetayService {
         // Veriyi indir
         URLSession.shared.dataTask(with: url) { data, response, error in
             // Hata durumunu kontrol et
-            if let error = error {
+            if error != nil {
                 return completion(.failure(.veriGelmedi))
             }
             
