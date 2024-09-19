@@ -1,9 +1,3 @@
-//
-//  FilmDetayViewModel.swift
-//  MovieSearch
-//
-//  Created by Fatih Kahraman on 10.09.2024.
-//
 
 import Foundation
 import SwiftUI

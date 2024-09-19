@@ -36,6 +36,15 @@ struct Movie: Codable,Identifiable, Equatable {
     
 }
 
+struct GelenFilmler: Codable {
+    let results: [Movie] // JSON yanıtındaki anahtar ile eşleşmeli
+    
+    private enum CodingKeys: String, CodingKey {
+        case results = "results" // JSON yanıtındaki anahtar ile eşleşmeli
+    }
+}
+
+
 struct NowPlayingResponse: Decodable {
     let results: [Movie]
 }

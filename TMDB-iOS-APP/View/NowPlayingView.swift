@@ -34,7 +34,9 @@ struct NowPlayingView: View {
             .navigationTitle("Now Playing Movies")
             .onAppear {
                 viewModel.loadMovies()
+                
             }
+            
         }
     }
     

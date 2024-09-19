@@ -32,10 +32,11 @@ class FilmDetayService {
             }
         }.resume()
     }
+    
+    enum DownloaderError: Error {
+        case yanlisUrl
+        case veriGelmedi
+        case veriIslenemedi
+    }
 }
 
-enum DownloaderError: Error {
-    case yanlisUrl
-    case veriGelmedi
-    case veriIslenemedi
-}
