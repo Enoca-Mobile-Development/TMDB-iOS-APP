@@ -224,7 +224,6 @@ struct CategoryView: View {
                         viewModel4.loadMovies()
                     }
                    
-                
                     .navigationTitle("Category")
                                 }
                                 .tabItem {
@@ -237,7 +236,7 @@ struct CategoryView: View {
                                         Label("Search", systemImage: "magnifyingglass")
                                     }
                                 
-                                ProfileView()
+                                RegisterView()
                                     .tabItem {
                                         Label("Profile", systemImage: "person")
                                     }
