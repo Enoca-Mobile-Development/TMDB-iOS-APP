@@ -11,7 +11,6 @@ struct CategoryView: View {
     
     var body: some View {
             NavigationView {
-                TabView{
                 ScrollView(.vertical) {
                     Spacer()
                     VStack(spacing:20){
@@ -64,7 +63,7 @@ struct CategoryView: View {
                             viewModel.loadMovies()
                             
                         }
-                       
+                        
                     }
                     
                     .padding(.bottom, 20) // ZStack içeriğinin altına padding ekleme
@@ -175,7 +174,7 @@ struct CategoryView: View {
                     .onAppear {
                         viewModel3.loadMovies()
                     }
-                   
+                    
                     
                     VStack(spacing:20){
                         ZStack(alignment: .topTrailing) {
@@ -213,7 +212,7 @@ struct CategoryView: View {
                                 }
                                 .buttonStyle(PlainButtonStyle())
                                 
-                               
+                                
                             }
                             .padding(.top, -40)
                             
@@ -223,27 +222,10 @@ struct CategoryView: View {
                     .onAppear {
                         viewModel4.loadMovies()
                     }
-                   
-                    .navigationTitle("Category")
-                                }
-                                .tabItem {
-                                    Label("Home", systemImage: "house")
-                                }
-                                
-                                // Arama Tabı
-                                SearchView()
-                                    .tabItem {
-                                        Label("Search", systemImage: "magnifyingglass")
-                                    }
-                                
-                                RegisterView()
-                                    .tabItem {
-                                        Label("Profile", systemImage: "person")
-                                    }
                     
                 }
-                
                         }
+        
                     }
                 }
             

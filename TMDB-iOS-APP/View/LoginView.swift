@@ -12,6 +12,24 @@ struct LoginView: View {
     var body: some View {
         NavigationView {
             VStack {
+                
+                // Movie App Başlığı
+                Text("MOVIE APP")
+                    .font(.largeTitle)
+                    .fontWeight(.bold)
+                    .padding(.top, -40)
+                    .padding(.bottom,100)
+                    .frame(maxWidth: .infinity,alignment: .center)
+              
+   
+                
+                // Register Başlığı
+                Text("Sign In")
+                    .font(.title2)
+                    .padding(.bottom, 30)
+                    .fontWeight(.bold)
+                    .padding(.leading, -175)
+                
                 TextField("Email", text: $email)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
                     .padding()
@@ -40,7 +58,6 @@ struct LoginView: View {
                         .padding()
                 }
             }
-            .navigationTitle("Login")
 
         }
         .navigationBarBackButtonHidden(true) // 1

@@ -12,8 +12,25 @@ struct RegisterView: View {
     @State private var errorMessage: String?
 
     var body: some View {
+        
         NavigationView{
             VStack {
+                
+                // Movie App Başlığı
+                Text("MOVIE APP")
+                    .font(.largeTitle)
+                    .fontWeight(.bold)
+                    .padding(.top, 50)
+                    .padding(.bottom,100)
+                    .frame(maxWidth: .infinity,alignment: .center)
+           
+                // Register Başlığı
+                Text("Sign In")
+                    .font(.title2)
+                    .padding(.bottom, 30)
+                    .fontWeight(.bold)
+                    .padding(.leading, -175)
+                
                 TextField("Name", text: $name)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
                     .padding()
@@ -46,16 +63,13 @@ struct RegisterView: View {
                 
                 NavigationLink(destination: LoginView(), isActive: $registrationSuccessful){}
                 
-             
-
+                
             }
-            .navigationTitle("Register")
-            
-        
-            
         }
         .navigationBarBackButtonHidden(true) // 1
     }
+    
+    
     private func register() {
         Auth.auth().createUser(withEmail: email, password: password) { result, error in
             if let error = error {

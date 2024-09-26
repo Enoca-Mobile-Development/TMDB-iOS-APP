@@ -22,8 +22,9 @@ struct TMDB_iOS_APPApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
     var body: some Scene {
         WindowGroup {
-            CategoryView()
+            LoginView()
             
         }
     }
 }
+

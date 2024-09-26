@@ -6,36 +6,84 @@ import FirebaseFirestore
 
 struct ProfileView: View {
     @State private var userName: String = ""
-
+    @State private var isLoggedOut: Bool = false // Kullanıcının çıkış yaptığını izlemek için
+    
+    
     var body: some View {
-        NavigationView{
-            VStack {
-                Text("Hoşgeldin, \(userName)")
-                    .font(.largeTitle)
+        TabView{
+            NavigationView{
+                VStack {
+                    Text("Hoşgeldin, \(userName)")
+                        .font(.largeTitle)
+                        .padding()
+                    
+                    Button("Favoriler") {
+                        // Favoriler sayfasına yönlendirme
+                    }
                     .padding()
-                
-                Button("Favoriler") {
-                    // Favoriler sayfasına yönlendirme
+                    
+                    Button("Ayarlar") {
+                        
+                    }
+                    .padding()
+                    
+                    Button("Logout") {
+                        logoutAndResetApp()
+                    }
+                    .foregroundColor(.red)
+                    .padding()
+                    NavigationLink(destination: LoginView(), isActive: $isLoggedOut) {
+                        EmptyView()
+                    }
                 }
-                .padding()
-                
-                Button("Ayarlar") {
-                    // Ayarlar sayfasına yönlendirme
+                .navigationTitle("Profile")
+                .onAppear {
+                    fetchUserName()
                 }
-                .padding()
             }
-            .navigationTitle("Profile")
-            .onAppear {
-                fetchUserName()
+            
+            .tabItem {
+                Label("Profile", systemImage: "person.fill")
             }
+            CategoryView()
+                .tabItem {
+                    Label("Home", systemImage: "house.fill")
+                }
+            
+            SearchView()
+                .tabItem {
+                    Label("Search", systemImage: "magnifyingglass")
+                }
+            
         }
+        
     }
+    
     private func fetchUserName() {
         if let user = Auth.auth().currentUser {
             userName = user.displayName ?? "Kullanıcı"
         }
     }
+    private func logoutAndResetApp() {
+        do {
+            try Auth.auth().signOut()
+
+            // Kök görünümü resetle: Logout sonrasında LoginView'a yönlendir
+            if let window = UIApplication.shared.windows.first {
+                window.rootViewController = UIHostingController(rootView: LoginView())
+                window.makeKeyAndVisible()
+            }
+
+        } catch {
+            print("Logout failed: \(error.localizedDescription)")
+            // Burada hata ile ilgili kullanıcıya bilgi verebilirsiniz
+        }
+    }
+
+    
 }
+
+        
 
 
 struct ProfileView_Previews: PreviewProvider {
